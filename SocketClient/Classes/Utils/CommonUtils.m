@@ -10,6 +10,26 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "ITTGobalPaths.h"
 
+CGRect adjustAllScreenFrame(CGRect frame,CGRect superFrame)
+{
+    if (superFrame.size.width==0||superFrame.size.height==0) {
+        return CGRectZero;
+    }
+    CGFloat wScale = frame.size.width/superFrame.size.width;
+    CGFloat hScale = frame.size.height/superFrame.size.height;
+    if (wScale>hScale){
+        CGFloat width = superFrame.size.height/frame.size.height*frame.size.height;
+        CGFloat height = superFrame.size.height;
+        return CGRectMake(-(width-superFrame.size.width)/2, 0, width, height);
+    }else if(wScale<hScale){
+        CGFloat width = superFrame.size.width;
+        CGFloat height = superFrame.size.width/frame.size.width*frame.size.height;
+        return CGRectMake(0, -(height-superFrame.size.height)/2, width, height);
+    }
+    return superFrame;
+}
+
+
 @implementation CommonUtils
 
 + (NSString *)convertArrayToString:(NSArray *)array

@@ -12,6 +12,9 @@
 #import <mach/mach_host.h>
 #import <Foundation/Foundation.h>
 
+
+CGRect adjustAllScreenFrame(CGRect frame,CGRect superFrame);
+
 @interface CommonUtils : NSObject
 
 + (long)getDocumentSize:(NSString *)folderName;
