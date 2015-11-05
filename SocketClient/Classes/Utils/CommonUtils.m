@@ -18,7 +18,7 @@ CGRect adjustAllScreenFrame(CGRect frame,CGRect superFrame)
     CGFloat wScale = frame.size.width/superFrame.size.width;
     CGFloat hScale = frame.size.height/superFrame.size.height;
     if (wScale>hScale){
-        CGFloat width = superFrame.size.height/frame.size.height*frame.size.height;
+        CGFloat width = superFrame.size.height/frame.size.height*frame.size.width;
         CGFloat height = superFrame.size.height;
         return CGRectMake(-(width-superFrame.size.width)/2, 0, width, height);
     }else if(wScale<hScale){
