@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+@import AVFoundation;
 
 @interface AppDelegate ()
 
@@ -14,9 +15,30 @@
 
 @implementation AppDelegate
 
+- (void)initAudioSessionListener
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioSessionDidChangeInterruptionType:)
+                                                 name:AVAudioSessionInterruptionNotification object:[AVAudioSession sharedInstance]];
+}
+
+
+- (void)audioSessionDidChangeInterruptionType:(NSNotification *)notification
+{
+    AVAudioSessionInterruptionType interruptionType = [[[notification userInfo]objectForKey:AVAudioSessionInterruptionTypeKey] unsignedIntegerValue];
+    
+    if (AVAudioSessionInterruptionTypeBegan == interruptionType)
+    {
+        ITTDPRINT(@"AVAudioSessionInterruptionTypeBegan");
+    }
+    else if (AVAudioSessionInterruptionTypeEnded == interruptionType)
+    {
+        ITTDPRINT(@"AVAudioSessionInterruptionTypeEnded");
+    }
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self initAudioSessionListener];
     return YES;
 }
 
